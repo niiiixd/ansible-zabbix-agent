@@ -1,0 +1,25 @@
+---
+- name: "Remove Zabbix agent"
+  ansible.builtin.include_tasks:
+    file: "remove.yml"
+  tags:
+    - "zabbix-agent-remove"
+
+- name: "Add Zabbix Repository"
+  ansible.builtin.include_tasks:
+    file: "zabbix-repo.yml"
+  tags:
+    - "zabbix-repo"
+    - "zabbix-agent"
+
+- name: "Install zabbix-agent"
+  ansible.builtin.include_tasks:
+    file: "install.yml"
+  tags:
+    - "zabbix-agent"
+
+- name: "Config zabbix-agent"
+  ansible.builtin.include_tasks:
+    file: "config.yml"
+  tags:
+    - "zabbix-agent"

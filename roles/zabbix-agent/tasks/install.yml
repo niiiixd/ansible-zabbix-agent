@@ -1,0 +1,8 @@
+---
+- name: "Install zabbix-agent"
+  ansible.builtin.package:
+    name: "zabbix-agent"
+    state: "latest" 
+  environment:
+    "{{ proxy_env}}"
+  when: zabbix_repo_install

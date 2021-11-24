@@ -1,0 +1,12 @@
+# Zabbix configuration variables
+proxy_env: {}
+  # no_proxy: example.com
+  # http_proxy: 'http://proxy.mamad.com'
+  # https_proxy: 'http://proxy.mamad.com'
+
+zabbix_agent:
+  server_version: 5.4
+  version: 5.4
+  zabbix_version_patch: 7
+  server: <<ZABBIX_SERVER_IP_ADDRESS>>
+  serveractive: <<ZABBIX_SERVER_IP_ADDRESS>>

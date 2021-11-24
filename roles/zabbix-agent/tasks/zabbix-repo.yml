@@ -1,0 +1,37 @@
+---
+- name: "Download zabbix repo - Debain based"
+  get_url:
+    url: https://repo.zabbix.com/zabbix/{{ zabbix_agent.version }}/debian/pool/main/z/zabbix-release/zabbix-release_{{ zabbix_agent.version }}-1+debian{{ ansible_facts['distribution_major_version'] }}_all.deb
+    dest: /tmp/zabbix.deb
+    backup: no
+  when: ansible_facts["distribution"] in ["Debian", "Ubuntu"]
+  register: zabbix_repo_download
+  tags:
+    - zabbix-agent
+    - init
+
+- name: "Install zabbix repo - Debian based"
+  apt:
+    deb: /tmp/zabbix.deb
+  when: zabbix_repo_download
+  register: zabbix_repo_install
+  tags:
+    - zabbix-agent
+    - init
+
+- name: "Add zabbix repo - RedHat8 based"
+  dnf:
+    name: 'https://repo.zabbix.com/zabbix/{{ zabbix_agent.version }}/rhel/8/x86_64/zabbix-release-{{ zabbix_agent.version }}.{{ zabbix_agent.zabbix_version_patch}}-1.el8.noarch.rpm'
+    state: present
+  when: ( ansible_facts["distribution"] in ["CentOS", "RedHat"] and ansible_facts["distribution_major_version"] == "8" ) or
+        ( ansible_facts["distribution"] == "Fedora" )
+  register: zabbix_repo_add
+
+- name: "Add zabbix repo - RedHat7 based"
+  dnf:
+    name: 'https://repo.zabbix.com/zabbix/{{ zabbix_agent.version }}/rhel/7/x86_64/zabbix-release-{{ zabbix_agent.version }}.{{ zabbix_agent.zabbix_version_patch}}-1.el7.noarch.rpm'
+    state: present
+  when:
+    - ansible_facts["distribution"] in ["CentOS", "RedHat"]
+    - ansible_facts["distribution_major_version"] == "7"
+  register: zabbix_repo_add

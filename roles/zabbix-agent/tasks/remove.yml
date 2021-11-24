@@ -1,0 +1,35 @@
+---
+- name: "Stop zabbix-agent service"
+  ansible.builtin.service:
+    name: "zabbix-agent"
+    state: stopped
+    enabled: false
+  become: true
+  tags:
+    - remove_zabbix_agent
+
+- name: "Remove zabbix-agent"
+  ansible.builtin.package:
+    name: "zabbix-agent"
+    state: absent
+    purge: yes
+  become: true
+  tags:
+    - remove_zabbix_agent
+
+- name: "Remove zabbix config files"
+  ansible.builtin.file:
+    path: /etc/zabbix
+    state: absent
+  become: true
+  tags:
+    - remove_zabbix_agent
+
+- name: "Remove zabbix user"
+  ansible.builtin.user:
+    name: zabbix
+    state: absent
+    remove: yes
+  become: true
+  tags:
+    - remove_zabbix_agent

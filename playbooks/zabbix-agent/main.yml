@@ -1,0 +1,28 @@
+# Requirements:
+#   ANSIBLE_VERSION >= 2.10.4
+
+- hosts: "zabbix-agent"
+  #user: "defaults to SSH_USER if not specified"
+  become: true
+  become_method: "sudo"
+  gather_facts: true
+  tasks:
+
+    - name: "load vars from corresponding files in vars directory"
+      ansible.builtin.include_vars:
+        dir: "vars/"
+        # If the path is relative, it will look for the file in vars/ subdirectory of a role or relative to playbook.
+        #file: "./main.yml"
+        extensions:
+          - 'yaml'
+          - 'yml'
+        ignore_unknown_extensions: true
+      tags: ["VARS"]
+
+    - name: "Initialize Zabbix Agent role"
+      ansible.builtin.include_role:
+        name: "roles/zabbix-agent"
+        tasks_from: "main"
+        apply:
+          tags: ["zabbix-agent"]
+      tags: ["zabbix-agent"]

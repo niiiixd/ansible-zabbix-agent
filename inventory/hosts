@@ -1,0 +1,11 @@
+# Main inventory
+
+[zabbix-agent]
+server1.example.com ansible_host=192.168.1.120
+server2.example.com ansible_host=192.168.1.121
+
+[mamad]
+server1.mamad.com ansible_host=192.168.1.130
+server2.mamad.com ansible_host=192.168.1.131
+server3.mamad.com ansible_host=192.168.1.132
+server4.mamad.com ansible_host=192.168.1.133
