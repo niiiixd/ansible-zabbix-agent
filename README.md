@@ -25,7 +25,6 @@ Dependencies
 Example Playbook
 ----------------
 
-
     # Replace {{ ROLE }} and {{ INVENTORY }} with the role and inventory name
     # Remove {{ TAGS }} and {{ SKIP_TAGS }} if not needed
 ```
